@@ -9,9 +9,9 @@ def fn_date():
     egy_nap = datetime.date(2021, 3, 10)
     print(egy_nap)
     egy_nap2 = datetime.date.fromisoformat("2021-03-08")
-    print(egy_nap)
+    print(egy_nap2)
     egy_nap3 = datetime.datetime.strptime("2021 (év) 03 (hó) 10. (nap)", "%Y (év) %m (hó) %d. (nap)")
-    print(egy_nap)
+    print(egy_nap3)
     print(egy_nap.strftime("Év: %Y, hónap: %m, nap: %d"))
     print(egy_nap.year)
     print(egy_nap.month)
@@ -30,8 +30,8 @@ def fn_time():
     # egy_idopillanat = datetime.time(12)
     # egy_idopillanat = datetime.time(12, 00)
     # egy_idopillanat = datetime.time(12, 0, 0)
-    # egy_idopillanat = datetime.time(12, 00, 00, 123)
-    egy_idopillanat = datetime.time(12, 10, 12, 123, datetime.timezone.utc)
+    egy_idopillanat = datetime.time(12, 00, 00, 123)
+    # egy_idopillanat = datetime.time(12, 10, 12, 123, datetime.timezone.utc)
     print("time", egy_idopillanat)
     print(egy_idopillanat.hour)
     # Vigyázat! A min az a lehető legkisebb értéke az objektumnak!
@@ -85,13 +85,13 @@ def fn_timedelta():
 
 if __name__ == '__main__':
     # date - dátumkezelés
-    fn_date()
+    # fn_date()
 
     # time - idő kezelés
-    fn_time()
+    # fn_time()
 
     # datetime - datum + ido
-    fn_datetime()
+    # fn_datetime()
 
     # timedelta - időpillanatok közti különbségek kezelésére
     fn_timedelta()
