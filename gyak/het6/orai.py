@@ -6,7 +6,7 @@ from typing import List
 
 
 @dataclass
-class ClocResult:
+class Tarol:
     path: str
     language: str
     code: int
@@ -19,17 +19,14 @@ class ClocResult:
 
 def run_cloc(utvonal: str):
     try:
-        be = subprocess.run(["cloc", utvonal],capture_output=True, text=True, timeout=5)
-        kimenet = json.loads(be.stdout)
 
-        languages = []
-        for lang in kimenet.keys():
-            if lang not in ["header", "SUM"]:
-                languages.append(lang)
+        cp = subprocess.run(["cloc", "utils"], capture_output=True, text=True)
+        darabolt = cp.stdout.split()
 
-        lang = languages[0]
-        stat = kimenet[lang]
-        return ClocResult(utvonal, lang, stat.get("code", 0), stat.get("comment", 0), stat.get("blank", 0))
+        # print(cp.stdout)
+        # print(cp.stdout.split()[20])
+
+        return Tarol(utvonal, darabolt[10], int(darabolt[20]), int(darabolt[19]), int(darabolt[18]))
     except (subprocess.TimeoutExpired, json.JSONDecodeError):
         return None
 
@@ -47,7 +44,9 @@ def run_cloc_dir(mappa: str, recursive: bool):
     return vege
 
 
-
-results = run_cloc_dir("./sajat_mappa", recursive=True)
+tmp = run_cloc("utils")
+print(tmp)
+print(tmp.loc())
+results = run_cloc_dir("utils", recursive=True)
 for res in results:
     print(f"{res.path}: {res.language}, {res.loc()} sor")

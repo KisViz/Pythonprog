@@ -13,7 +13,7 @@ parser.add_argument('-i', action='help')
 parser.add_argument('-j', action='store', default="Jaj ne")
 parser.add_argument('-v', action='version')
 parser.add_argument('--input', action='store', type=int, nargs=3)
-parser.add_argument('-x', action='count', required=True)
+parser.add_argument('-x', action='count', required=False)
 parser.add_argument('-p', choices=("alma", "körte", "barack"))
 
 my_group = parser.add_mutually_exclusive_group()

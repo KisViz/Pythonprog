@@ -2,6 +2,10 @@ import subprocess
 
 # https://docs.python.org/3/library/subprocess.html
 
+# import shutil
+# print(shutil.which("cloc"))
+
+
 if __name__ == '__main__':
     # subprocess.run(["help"])
     # subprocess.run(["echo", "Húsvéti nyúl"])
