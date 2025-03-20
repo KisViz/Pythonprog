@@ -26,7 +26,7 @@ def run_cloc(utvonal: str):
         # print(cp.stdout)
         # print(cp.stdout.split()[20])
 
-        return Tarol(utvonal, darabolt[10], int(darabolt[20]), int(darabolt[19]), int(darabolt[18]))
+        return Tarol(utvonal, darabolt[16], int(darabolt[20]), int(darabolt[19]), int(darabolt[18]))
     except (subprocess.TimeoutExpired, json.JSONDecodeError):
         return None
 
@@ -44,9 +44,22 @@ def run_cloc_dir(mappa: str, recursive: bool):
     return vege
 
 
+def max_loc(mappa: str, recursive: bool):
+    results = run_cloc_dir(mappa, recursive)
+
+    if not results:
+        return ""
+
+    def get_loc(result):
+        return result.loc()
+
+    return max(results, key=get_loc).path
+
 tmp = run_cloc("utils")
 print(tmp)
 print(tmp.loc())
-results = run_cloc_dir("utils", recursive=True)
-for res in results:
-    print(f"{res.path}: {res.language}, {res.loc()} sor")
+vege = run_cloc_dir("utils", recursive=True)
+for elem in vege:
+    print(f"{elem.path}: {elem.language}, {elem.loc()} sor")
+    # print(f", {elem.loc()} sor")
+print(max_loc("utils", True))
