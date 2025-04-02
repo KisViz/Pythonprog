@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+from diagram import *
 
 
 #adarokat betoltjuk
@@ -65,37 +64,16 @@ def main():
     st.header('COVID-19 esetszámok összehasonlítása')
 
     #diagammok
+    chart = None
     if diagram_tipus == 'Vonal':
-        abra, tengely = plt.subplots(figsize=(12, 6))
-        sns.lineplot(
-            data=atalakított_df,
-            x='Dátum',
-            y='Esetek',
-            hue='Country/Region',
-            ax=tengely
-        )
+        chart = VonalDiagram(atalakított_df)
     elif diagram_tipus == 'Oszlop':
-        abra, tengely = plt.subplots(figsize=(12, 6))
-        sns.barplot(
-            data=atalakított_df,
-            x='Dátum',
-            y='Esetek',
-            hue='Country/Region',
-            ax=tengely
-        )
-    else:#terulet
-        abra, tengely = plt.subplots(figsize=(12, 6))
-        atalakított_df.pivot(
-            index='Dátum',
-            columns='Country/Region',
-            values='Esetek'
-        ).plot.area(ax=tengely)
+        chart = OszlopDiagram(atalakított_df)
+    elif diagram_tipus == 'Terület':
+        chart = TeruletDiagram(atalakított_df)
 
-    plt.xticks(rotation=45)
-    plt.title('COVID-19 esetszámok időbeli alakulása')
-    plt.ylabel('Esetek száma')
-    plt.xlabel('Dátum')
-    st.pyplot(abra)
+    if chart:
+        chart.show()
 
     #siman tablakent megjeleniti az adatot
     if st.checkbox('Mutasd a nyers adatokat'):
