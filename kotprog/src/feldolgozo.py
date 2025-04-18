@@ -16,7 +16,8 @@ def feldolgoz_csv(bemeneti_fajl, kimeneti_fajl):
         # datumok atalakitasa
         datum_oszlopok = []
         for oszlop in eredeti_fejlecek:
-            if oszlop in ['Province/State', 'Country/Region', 'Lat', 'Long']:  # ezek nem kellenek
+            if oszlop in ['Province/State', 'Country/Region',
+                          'Lat', 'Long']:  # ezek nem kellenek
                 continue
             try:
                 # masban is lehet "/" jel
@@ -24,7 +25,8 @@ def feldolgoz_csv(bemeneti_fajl, kimeneti_fajl):
                 if len(reszek) == 3:
                     honap, nap, ev = reszek
                     # atiras
-                    uj_datum = f"20{ev}-{honap.zfill(2)}-{nap.zfill(2)}"  # hogy szepen jelenjen meg a 01 stb
+                    # hogy szepen jelenjen meg a 01 stb
+                    uj_datum = f"20{ev}-{honap.zfill(2)}-{nap.zfill(2)}"
                     fejlecek.append(uj_datum)
                     datum_oszlopok.append(oszlop)
             except ValueError:
@@ -34,9 +36,12 @@ def feldolgoz_csv(bemeneti_fajl, kimeneti_fajl):
         for sor in olvaso:
             orszag = sor['Country/Region']
 
-            # uj orszag, ha meg nincs benne az adatok dicctben, akkor bele rakjuk
+            # uj orszag, ha meg nincs benne az adatok dicctben,
+            # akkor bele rakjuk
             if orszag not in adatok:
-                adatok[orszag] = {datum_oszlop: 0 for datum_oszlop in datum_oszlopok}  # alapertelmezett az 0
+                adatok[orszag] = {
+                    datum_oszlop: 0 for datum_oszlop in datum_oszlopok
+                }  # alapertelmezett az 0
 
             # osszegzes
             for datum_oszlop in datum_oszlopok:
@@ -49,7 +54,8 @@ def feldolgoz_csv(bemeneti_fajl, kimeneti_fajl):
                         ertek = int(ertek)
                 except Exception:
                     ertek = 0
-                adatok[orszag][datum_oszlop] += ertek  # hozzaadjuk a mar meglevohoz
+                # hozzaadjuk a mar meglevohoz
+                adatok[orszag][datum_oszlop] += ertek
 
     # mentes
     with open(kimeneti_fajl, 'w', newline='') as kimenet:

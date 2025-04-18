@@ -2,11 +2,12 @@ import pytest
 from unittest.mock import patch, Mock
 import pandas as pd
 from datetime import datetime
-from src.diagram import *
-
+from src.diagram.oszlop import OszlopDiagram
+from src.diagram.terulet import TeruletDiagram
+from src.diagram.vonal import VonalDiagram
 
 """
-Itt a legnagyobb gondot a Mock jelentette, amit a gyakorlat anyagából 
+Itt a legnagyobb gondot a Mock jelentette, amit a gyakorlat anyagából
 és a következő helyekről szemezgettem össze:
 https://docs.python.org/3/library/unittest.mock.html
 https://www.toptal.com/python/an-introduction-to-mocking-in-python
@@ -16,25 +17,30 @@ Ai:((
 """
 
 
-#adatok a teszteleshez
+# adatok a teszteleshez
 @pytest.fixture
-def sample_data(): #egy elore elkeszitett teszetlos dataframe
+def sample_data():  # egy elore elkeszitett teszetlos dataframe
     return pd.DataFrame({
         'Country/Region': ['Hungary', 'Hungary', 'Germany', 'Germany'],
-        'Dátum': [datetime(2020, 3, 1), datetime(2020, 3, 2), datetime(2020, 3, 1), datetime(2020, 3, 2)],
+        'Dátum': [
+            datetime(2020, 3, 1),
+            datetime(2020, 3, 2),
+            datetime(2020, 3, 1),
+            datetime(2020, 3, 2)
+        ],
         'Esetek': [10, 20, 30, 40]
     })
 
 
-#ellenorzi, hogy valoban a lineplotot hivaj e meg es jol hivja e
+# ellenorzi, hogy valoban a lineplotot hivaj e meg es jol hivja e
 def test_vonal_diagram_create_chart(sample_data):
-    #lecserekli a lineplotot egy mockra
+    # lecserekli a lineplotot egy mockra
     with patch('seaborn.lineplot') as mock_lineplot:
-        mock_ax = Mock() #letrehoz egy tengelyt
-        diagram = VonalDiagram(sample_data) #megcsinaljuk a diaramot
-        diagram.create_chart(mock_ax) #es atadjuk a mockolt tejgelyt
+        mock_ax = Mock()  # letrehoz egy tengelyt
+        diagram = VonalDiagram(sample_data)  # megcsinaljuk a diaramot
+        diagram.create_chart(mock_ax)  # es atadjuk a mockolt tejgelyt
 
-        #ellenorzi, hogy egyszer hija e meg a lineplotot a parameterekkel
+        # ellenorzi, hogy egyszer hija e meg a lineplotot a parameterekkel
         mock_lineplot.assert_called_once_with(
             data=sample_data,
             x='Dátum',
@@ -44,16 +50,16 @@ def test_vonal_diagram_create_chart(sample_data):
         )
 
 
-#megnezi, hogy jol csoportosit e es jo e a barplot hivasa
+# megnezi, hogy jol csoportosit e es jo e a barplot hivasa
 def test_oszlop_diagram_create_chart(sample_data):
     with patch('seaborn.barplot') as mock_barplot:
-        mock_ax = Mock() #letrehoz egy tengelyt
-        diagram = OszlopDiagram(sample_data) #megcsinaljuk a diaramot
-        diagram.create_chart(mock_ax) #es atadjuk a mockolt tejgelyt
+        mock_ax = Mock()  # letrehoz egy tengelyt
+        diagram = OszlopDiagram(sample_data)  # megcsinaljuk a diaramot
+        diagram.create_chart(mock_ax)  # es atadjuk a mockolt tejgelyt
 
-        #megnez megvam e a datumcsoport
+        # megnez megvam e a datumcsoport
         assert 'Dátum_csoport' in diagram.data.columns
-        #megnezi, hogy egyszer van e hiva es hekyesek e
+        # megnezi, hogy egyszer van e hiva es hekyesek e
         mock_barplot.assert_called_once()
         args, kwargs = mock_barplot.call_args
         assert kwargs['x'] == 'Dátum_csoport'
@@ -62,18 +68,20 @@ def test_oszlop_diagram_create_chart(sample_data):
         assert kwargs['ax'] == mock_ax
 
 
-#megnezzuk jo e a hivasa a teruletnek
+# megnezzuk jo e a hivasa a teruletnek
 def test_terulet_diagram_create_chart(sample_data):
     with patch('pandas.DataFrame.pivot') as mock_pivot:
         mock_plot = Mock()
-        mock_pivot.return_value.plot = Mock() #dataframet keszit orszagonkenti oszlopokkal
-        mock_pivot.return_value.plot.area = mock_plot #atadjuk a mockolt plotot
-        mock_ax = Mock() #letrehoz egy tengelyt
+        # dataframet keszit orszagonkenti oszlopokkal
+        mock_pivot.return_value.plot = Mock()
+        # atadjuk a mockolt plotot
+        mock_pivot.return_value.plot.area = mock_plot
+        mock_ax = Mock()  # letrehoz egy tengelyt
 
-        diagram = TeruletDiagram(sample_data) #megcsinaljuk a diaramot
-        diagram.create_chart(mock_ax) #es atadjuk a mockolt tejgelyt
+        diagram = TeruletDiagram(sample_data)  # megcsinaljuk a diaramot
+        diagram.create_chart(mock_ax)  # es atadjuk a mockolt tejgelyt
 
-        #elleonorizzuk, hogy jok vannak e beallitva
+        # elleonorizzuk, hogy jok vannak e beallitva
         mock_pivot.assert_called_once_with(
             index='Dátum',
             columns='Country/Region',

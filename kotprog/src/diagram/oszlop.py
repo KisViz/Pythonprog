@@ -7,9 +7,15 @@ class OszlopDiagram(Diagram):
     """Oszlopdiagram"""
 
     def create_chart(self, tengely):
-        # datumok hetenkent, hogy ne legyen egy fkete kocka (ehhez kellett egy kis help:'))
-        self.data['Dátum_csoport'] = self.data['Dátum'].dt.to_period('W').dt.to_timestamp()
-        grouped_df = self.data.groupby(['Dátum_csoport', 'Country/Region'])['Esetek'].mean().reset_index()
+        # datumok hetenkent, hogy ne legyen egy fkete kocka
+        # (ehhez kellett egy kis help:'))
+        self.data['Dátum_csoport'] = (
+            self.data['Dátum'].dt.to_period('W').dt.to_timestamp()
+        )
+        grouped_df = (
+            self.data.groupby(['Dátum_csoport', 'Country/Region'])['Esetek']
+            .mean().reset_index()
+        )
 
         sns.barplot(
             data=grouped_df,
@@ -19,5 +25,6 @@ class OszlopDiagram(Diagram):
             ax=tengely
         )
 
-        # ez azert kell, hogy az x tengely normalisan nezzen ki, max 10 cimke lehet
+        # ez azert kell, hogy az x tengely normalisan nezzen ki,
+        # max 10 cimke lehet
         tengely.xaxis.set_major_locator(plt.MaxNLocator(10))

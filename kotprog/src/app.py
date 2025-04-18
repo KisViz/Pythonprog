@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from .diagram import *
+from .diagram import VonalDiagram, OszlopDiagram, TeruletDiagram
 
 
 """
@@ -40,7 +40,10 @@ def main():
     )
 
     # datumook
-    datum_oszlopok = [oszlop for oszlop in df.columns if oszlop != 'Country/Region']
+    datum_oszlopok = [
+        oszlop for oszlop in df.columns
+        if oszlop != 'Country/Region'
+    ]
     min_datum = pd.to_datetime(datum_oszlopok).min()
     max_datum = pd.to_datetime(datum_oszlopok).max()
 
