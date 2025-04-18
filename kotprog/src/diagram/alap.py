@@ -1,13 +1,11 @@
 from abc import ABC, abstractmethod
-
 import streamlit as st
 import matplotlib.pyplot as plt
 
+
 class Diagram(ABC):
     """
-    Alap osztaly a diarammokhoz
-    wow, lehet ilyet is
-    ezt meg nem probaltam
+    Alap osztály a diaramokhoz
     """
 
     def __init__(self, data):
@@ -18,17 +16,17 @@ class Diagram(ABC):
         pass
 
     def show(self):
-        """megjelenites"""
+        """Megjelenítés"""
 
-        #letrehozzuk az abrat
+        # letrehozzuk az abrat
         abra, tengely = plt.subplots(figsize=(12, 6))
         self.create_chart(tengely)
 
-        #beallitjuk adolgokat
+        # beallitjuk adolgokat
         plt.xticks(rotation=45)
         plt.title('COVID-19 esetszámok időbeli alakulása')
         plt.ylabel('Esetek száma')
         plt.xlabel('Dátum')
 
-        #megjelenitjuk az oldalon
+        # megjelenitjuk az oldalon
         st.pyplot(abra)

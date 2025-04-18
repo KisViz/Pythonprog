@@ -1,7 +1,8 @@
-from diagram.alap import Diagram
+from .alap import Diagram
+
 
 class TeruletDiagram(Diagram):
-    """teruletdiagram"""
+    """Területdiagram"""
 
     def create_chart(self, tengely):
         self.data.pivot(

@@ -1,10 +1,10 @@
 import seaborn as sns
 
-from diagram.alap import Diagram
+from .alap import Diagram
 
 
 class VonalDiagram(Diagram):
-    """vonaldiagram"""
+    """Vonaldiagram"""
 
     def create_chart(self, tengely):
         sns.lineplot(
