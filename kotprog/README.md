@@ -2,7 +2,7 @@
 - streamlit run main.py
 
 ##### Tesztek futtatása:<br/>
-- pytest test/<br/>
+- pytest src/<br/>
 - pytest --cov=src/
 
 ##### Kódelemző eszközök:<br/>
