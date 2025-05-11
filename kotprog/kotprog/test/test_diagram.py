@@ -2,9 +2,9 @@ import pytest
 from unittest.mock import patch, Mock
 import pandas as pd
 from datetime import datetime
-from src.diagram.oszlop import OszlopDiagram
-from src.diagram.terulet import TeruletDiagram
-from src.diagram.vonal import VonalDiagram
+from kotprog.src.diagram import OszlopDiagram
+from kotprog.src.diagram.terulet import TeruletDiagram
+from kotprog.src.diagram import VonalDiagram
 
 """
 Itt a legnagyobb gondot a Mock jelentette, amit a gyakorlat anyagából

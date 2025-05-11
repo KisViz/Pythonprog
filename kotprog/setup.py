@@ -1,12 +1,11 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='kotprog',
-    version='',
-    packages=['test'],
-    url='',
-    license='',
+    version='1.0',
+    packages=find_packages(),
+    install_requires=open("requirements.txt").read().splitlines(),
     author='Albert',
-    author_email='',
-    description=''
+    description='Covid adatvizualizáció',
+    include_package_data=True
 )

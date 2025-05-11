@@ -1,25 +1,19 @@
 import numpy as np
 
-def foo(mat1: np.ndarray, mat2: np.ndarray, _: str) -> np.ndarray:
-    if mat1.shape != mat2.shape:
-        size1 = mat1.size
-        size2 = mat2.size
+def foo(matrix1, matrix2, mode):
+    m1 = np.array(matrix1)
+    m2 = np.array(matrix2)
+
+    if m1.shape != m2.shape:
+        size1 = m1.size
+        size2 = m2.size
 
         if size1 == size2:
-            mat1 = mat1.reshape(mat2.shape)
+            m1 = m1.reshape(m2.shape)
         else:
             if size1 > size2:
-                flat = mat1.flatten()[:size2]
-                mat1 = flat.reshape(mat2.shape)
+                m1 = m1.flatten()[:size2].reshape(m2.shape)
             else:
-                flat = mat2.flatten()[:size1]
-                mat2 = flat.reshape(mat1.shape)
+                m2 = m2.flatten()[:size1].reshape(m1.shape)
 
-    return mat1 * mat2
-
-
-a = np.array([[1, 2], [3, 4]])
-b = np.array([10, 20, 30, 40])
-print(foo(a, b, "teszt"))
-# Output: [[10 40]
-#          [90 160]]
+    return m1 * m2

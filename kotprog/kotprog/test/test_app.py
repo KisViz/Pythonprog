@@ -1,9 +1,9 @@
 import pandas as pd
 import pytest
-import src.app
-from src.diagram.oszlop import OszlopDiagram
-from src.diagram.terulet import TeruletDiagram
-from src.diagram.vonal import VonalDiagram
+import kotprog.src.app
+from kotprog.src.diagram import OszlopDiagram
+from kotprog.src.diagram.terulet import TeruletDiagram
+from kotprog.src.diagram import VonalDiagram
 
 """
 A monkeypatch-hez és a data framek-hez sok segítség kellett, amiket
@@ -40,10 +40,10 @@ def test_betolt_adatok(monkeypatch, tmp_path):
 
     # igy a betolt adatok az ideiglenes filet olvassa be
     monkeypatch.setattr(
-        src.app, "betolt_adatok",
+        kotprog.src.app, "betolt_adatok",
         lambda: pd.read_csv(csv_path)
     )
-    df = src.app.betolt_adatok()
+    df = kotprog.src.app.betolt_adatok()
 
     assert isinstance(df, pd.DataFrame)  # letezeik
     assert "Country/Region" in df.columns  # jo nev

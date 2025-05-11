@@ -2,7 +2,7 @@
 import tempfile
 import os
 import csv
-from src.feldolgozo import feldolgoz_csv
+from kotprog.src.feldolgozo import feldolgoz_csv
 
 
 """
