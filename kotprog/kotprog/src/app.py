@@ -18,7 +18,7 @@ https://youtu.be/8W8NQFFbDcU?si=6YczQjV_La_hNcDp
 
 # adarokat betoltjuk
 def betolt_adatok():
-    return pd.read_csv('csv/feldolgozott/fertozottek.csv')
+    return pd.read_csv('kotprog/csv/feldolgozott/fertozottek.csv')
     # dataframebe tolti az adatokat es visszaadja
 
 

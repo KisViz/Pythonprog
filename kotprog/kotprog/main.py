@@ -1,3 +1,3 @@
-from kotprog.src.app import main
+from src.app import main
 
 main()
